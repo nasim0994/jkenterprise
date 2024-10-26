@@ -18,11 +18,11 @@ export default function Products() {
         <div className=" flex bg-primary justify-center py-3 rounded-xl">
           <h3 className="font-bold text-white text-2xl">Our Products</h3>
         </div>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-3">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-2">
           {products?.map((product) => (
             <div
               key={product?._id}
-              className="bg-white border shadow p-2.5 pb-4 rounded"
+              className="border shadow p-2.5 pb-4 rounded product_card"
             >
               <button
                 onClick={() => {
@@ -42,19 +42,29 @@ export default function Products() {
                 />
               </button>
 
-              <h2 className="text-lg font-bold mt-4">{product?.title}</h2>
+              <div>
+                <h2
+                  className="text-lg font-bold mt-4 cursor-pointer"
+                  onClick={() => {
+                    setProduct(product);
+                    setShowModal(!showModal);
+                  }}
+                >
+                  {product?.title}
+                </h2>
 
-              <div className="mt-2 flex justify-between">
-                <p className="font-semibold">Price: {product?.price} ৳</p>
+                <div className="mt-2 flex justify-between">
+                  <p className="font-semibold">Price: {product?.price} ৳</p>
 
-                <div className="flex items-end">
-                  <a
-                    href="#order"
-                    onClick={() => dispatch(setSelectedProduct(product))}
-                    className="py-1.5 px-2.5 border border-transparent bg-gray-500 rounded text-sm text-white hover:border-gray-500 hover:bg-transparent hover:text-black duration-300"
-                  >
-                    Buy Now
-                  </a>
+                  <div className="flex items-end">
+                    <a
+                      href="#order"
+                      onClick={() => dispatch(setSelectedProduct(product))}
+                      className="buy_btn py-1.5 px-2.5 border border-transparent bg-primary rounded text-sm text-white hover:border-gray-500 hover:bg-transparent hover:text-black duration-300"
+                    >
+                      Buy Now
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

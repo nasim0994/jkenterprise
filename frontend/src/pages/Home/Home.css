@@ -27,3 +27,21 @@
 .activeFAQ {
   max-height: 500px;
 }
+
+.product_card {
+  transition: all 0.3s;
+}
+
+.product_card:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.buy_btn {
+  transition: all 0.3s;
+}
+
+.product_card:hover .buy_btn {
+  background: #fff;
+  color: var(--primary);
+}

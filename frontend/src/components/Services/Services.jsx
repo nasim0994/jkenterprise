@@ -8,7 +8,7 @@ export default function Services() {
   const { data: section } = useGetFeatureSectionQuery();
 
   return (
-    <section className="py-5 sm:py-8 bg-gray-50">
+    <section className="py-5 sm:py-8 bg-primary/5">
       <div className="container">
         <h2 className="text-3xl sm:text-4xl text-primary font-bold text-center">
           {section?.data?.title || "আমাদের সেবাসমূহ"}
@@ -25,7 +25,7 @@ export default function Services() {
                   feature?.icon
                 }`}
                 alt="feature"
-                className="w-full h-44 sm:h-[250px] rounded mx-auto"
+                className="w-28 sm:w-40 rounded mx-auto"
               />
 
               <h2 className="mt-3 text-2xl text-primary font-semibold">

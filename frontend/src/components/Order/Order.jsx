@@ -124,7 +124,7 @@ export default function Order() {
   return (
     <section ref={orderRef} className="py-5 sm:py-10" id="order">
       <div className="container">
-        <div className="border-2 border-primary rounded p-5 sm:p-10">
+        <div className="border-2 border-primary rounded p-5 sm:p-10 bg-secondary/20">
           <h2 className="sm:text-xl font-semibold text-center">
             অর্ডার করতে আপনার সঠিক তথ্য দিয়ে নিচের ফর্মটি সম্পূর্ণ পূরন করুন।
             <br /> (আগে থেকে কোন টাকা দেয়া লাগবে না। প্রোডাক্ট হাতে পাবার পর

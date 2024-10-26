@@ -30,7 +30,7 @@ export default function FAQ() {
             <div key={i} className="mb-2">
               <button
                 onClick={() => handelToggleFAQ(i)}
-                className="w-full flex justify-between items-center p-4 bg-[#74b6501c] font-semibold text-neutral rounded text-sm sm:text-base text-start"
+                className="w-full flex justify-between items-center p-4 bg-primary/30 font-semibold text-primary rounded text-sm sm:text-base text-start"
               >
                 <p>{faq?.qus}</p>
                 <span>
@@ -44,7 +44,7 @@ export default function FAQ() {
 
               {/* Content/Ans */}
               <div
-                className={`text-justify text-neutral-content duration-500 faq-content ${
+                className={`text-justify text-primary duration-500 faq-content ${
                   toggleFAQ === i && "activeFAQ"
                 }`}
               >
