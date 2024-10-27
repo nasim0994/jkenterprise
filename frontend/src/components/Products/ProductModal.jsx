@@ -12,7 +12,11 @@ export default function ProductModal({ showModal, setShowModal, product }) {
         className={`overlay ${showModal && "overlay_show"}`}
       ></button>
 
-      <div className={`modal w-[93%] sm:w-auto ${showModal && "modal_show"}`}>
+      <div
+        className={`modal w-[93%] sm:w-auto overflow-y-auto h-screen ${
+          showModal && "modal_show"
+        }`}
+      >
         <div className="flex justify-end p-4">
           <button onClick={() => setShowModal(false)}>
             <IoMdCloseCircleOutline className="text-[22px] text-neutral" />
@@ -21,7 +25,7 @@ export default function ProductModal({ showModal, setShowModal, product }) {
         <img
           src={import.meta.env.VITE_BACKEND_URL + "/product/" + product?.img}
           alt={product?.title}
-          className="w-[90%] sm:w-2/3 mx-auto rounded max-h-[100vh]"
+          className="w-[90%] sm:w-2/3 mx-auto rounded"
         />
 
         <div className="p-4 text-center">
@@ -29,14 +33,14 @@ export default function ProductModal({ showModal, setShowModal, product }) {
           <p className="font-semibold text-xl ">Price: {product?.price} ৳</p>
           <p className="text-sm text-gray-600">{product?.description}</p>
 
-          <div className="mt-2">
+          <div className="mt-4">
             <a
               href="#order"
               onClick={() => {
                 dispatch(setSelectedProduct(product));
                 setShowModal(false);
               }}
-              className="py-1.5 px-2.5 border border-transparent bg-gray-500 rounded text-sm text-white hover:border-gray-500 hover:bg-transparent hover:text-black duration-300"
+              className="primary_btn text-sm"
             >
               Buy Now
             </a>
