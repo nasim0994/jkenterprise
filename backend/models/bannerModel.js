@@ -6,16 +6,13 @@ const bannerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    galleries: {
+      type: Array,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
-    },
-    image: {
-      type: String,
-      required: true,
-    },
-    video: {
-      type: String,
     },
   },
   { timestamps: false }

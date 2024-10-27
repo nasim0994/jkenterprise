@@ -4,11 +4,10 @@ const fs = require("fs");
 exports.addProduct = async (req, res) => {
   const img = req.file ? req.file.filename : null;
   try {
-    const { title, price } = req.body;
+    const data = req.body;
 
     const newProduct = new Product({
-      title,
-      price,
+      ...data,
       img,
     });
 
@@ -54,7 +53,7 @@ exports.updateProduct = async (req, res) => {
 
   try {
     const productId = req.params.id;
-    const { title, price } = req.body;
+    const { title, price, description } = req.body;
 
     const product = await Product.findById(productId);
 
@@ -72,8 +71,9 @@ exports.updateProduct = async (req, res) => {
       product.img = img;
     }
 
-    product.title = title || product.title;
-    product.price = price || product.price;
+    product.title = title || product?.title;
+    product.price = price || product?.price;
+    product.description = description || product?.description;
 
     const updatedProduct = await product.save();
 

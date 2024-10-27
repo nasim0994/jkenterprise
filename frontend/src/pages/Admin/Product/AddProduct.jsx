@@ -16,6 +16,7 @@ export default function AddProduct() {
     e.preventDefault();
     const title = e.target.title.value;
     const price = e.target.price.value;
+    const description = e.target.description.value;
 
     if (image?.length <= 0) {
       return Swal.fire("", "Image is required", "warning");
@@ -25,6 +26,7 @@ export default function AddProduct() {
     formData.append("title", title);
     formData.append("price", price);
     formData.append("img", image[0].file);
+    formData.append("description", description);
 
     const res = await addProduct(formData);
 
@@ -102,6 +104,11 @@ export default function AddProduct() {
                   )}
                 </ImageUploading>
               </div>
+            </div>
+
+            <div>
+              <p className="mb-1">Description</p>
+              <textarea name="description"></textarea>
             </div>
           </div>
         </div>

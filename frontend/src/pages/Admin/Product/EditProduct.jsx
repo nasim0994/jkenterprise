@@ -13,16 +13,17 @@ export default function EditProduct() {
   const [image, setImage] = useState([]);
 
   const { id } = useParams();
-  const { data } = useGetProductByIdQuery({id});
+  const { data } = useGetProductByIdQuery({ id });
   const product = data?.data;
 
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  //------------Handle Add Product
-  const handleAddProduct = async (e) => {
+  //------------Handle Edit Product
+  const handleEdit = async (e) => {
     e.preventDefault();
     const title = e.target.title.value;
     const price = e.target.price.value;
+    const description = e.target.description.value;
 
     const formData = new FormData();
     formData.append("title", title);
@@ -30,10 +31,11 @@ export default function EditProduct() {
     if (image?.length > 0) {
       formData.append("img", image[0].file);
     }
+    formData.append("description", description);
 
-    const res = await updateProduct({ id, formData }).unwrap();
+    const res = await updateProduct({ id, formData });
 
-    if (res?.success) {
+    if (res?.data?.success) {
       Swal.fire("", "Product add success", "success");
       e.target.reset();
       setImage([]);
@@ -50,7 +52,7 @@ export default function EditProduct() {
         <h3>Edit Product</h3>
       </div>
 
-      <form className="p-4" onSubmit={handleAddProduct}>
+      <form className="p-4" onSubmit={handleEdit}>
         <div className="text-neutral-content flex flex-col gap-4">
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 items-center">
             {/* title */}
@@ -132,6 +134,14 @@ export default function EditProduct() {
                 />
               </div>
             )}
+          </div>
+
+          <div>
+            <p className="mb-1">Description</p>
+            <textarea
+              name="description"
+              defaultValue={product?.description}
+            ></textarea>
           </div>
         </div>
 

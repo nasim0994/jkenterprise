@@ -1,5 +1,9 @@
 import { useGetBannerQuery } from "../../Redux/banner/banner";
-import parse from "html-react-parser";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
 
 export default function Banner() {
   const { data } = useGetBannerQuery();
@@ -8,12 +12,12 @@ export default function Banner() {
   return (
     <section className="py-5 sm:py-7">
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 items-center">
           <div>
             <h2 className="text-3xl sm:text-5xl text-primary font-bold">
               {banner?.title}
             </h2>
-            <p className="mt-4 text-lg sm:text-xl font-medium">
+            <p className="sm:mt-4 text-lg sm:text-xl font-medium">
               {banner?.description}
             </p>
 
@@ -27,8 +31,29 @@ export default function Banner() {
             </div>
           </div>
 
-          <div className="-order-1 md:order-1 video-container">
-            {banner?.video && parse(banner?.video)}
+          <div className="-order-1 md:order-1">
+            <Swiper
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              pagination={true}
+              modules={[Autoplay, Pagination]}
+              loop={true}
+              grabCursor={true}
+            >
+              {banner?.galleries?.map((gallery) => (
+                <SwiperSlide key={gallery?._id}>
+                  <img
+                    src={`${import.meta.env.VITE_BACKEND_URL}/banner/${
+                      gallery?.url
+                    }`}
+                    alt={gallery?.title}
+                    className="w-full h-40 sm:h-72 object-cover rounded hover:cursor-grab"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </div>

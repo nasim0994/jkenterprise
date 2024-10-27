@@ -11,9 +11,6 @@ export default function ProductsList() {
   const { data, isLoading, isError, isSuccess } = useGetAllProductsQuery();
   const products = data?.data;
 
-  console.log(products);
-  
-
   const [deleteProduct] = useDeleteProductByIdMutation();
   const deleteProductHandler = async (id) => {
     const isConfirm = window.confirm("Are you sure delete this product?");
@@ -38,7 +35,7 @@ export default function ProductsList() {
   };
 
   let content = null;
-  if (isLoading) return (content = <Spinner/>);
+  if (isLoading) return (content = <Spinner />);
 
   if (isError) {
     content = (
