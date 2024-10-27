@@ -13,7 +13,7 @@ export default function ProductModal({ showModal, setShowModal, product }) {
       ></button>
 
       <div
-        className={`modal w-[93%] sm:w-auto overflow-y-auto h-screen ${
+        className={`modal w-[93%] sm:w-auto overflow-y-auto max-h-[95%] ${
           showModal && "modal_show"
         }`}
       >
@@ -29,11 +29,15 @@ export default function ProductModal({ showModal, setShowModal, product }) {
         />
 
         <div className="p-4 text-center">
-          <h2 className="text-2xl font-semibold">{product?.title}</h2>
-          <p className="font-semibold text-xl ">Price: {product?.price} ৳</p>
-          <p className="text-sm text-gray-600">{product?.description}</p>
+          <h2 className="text-2xl font-semibold text-start">
+            {product?.title}
+          </h2>
 
-          <div className="mt-4">
+          <div className="mt-2 mb-4 flex justify-between items-center">
+            <p className="font-semibold text-xl text-green-700">
+              Price: {product?.price} ৳
+            </p>
+
             <a
               href="#order"
               onClick={() => {
@@ -45,6 +49,7 @@ export default function ProductModal({ showModal, setShowModal, product }) {
               Buy Now
             </a>
           </div>
+          <p className="text-sm text-gray-600">{product?.description}</p>
         </div>
       </div>
     </>
