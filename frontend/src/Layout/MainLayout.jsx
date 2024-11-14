@@ -35,11 +35,18 @@ export default function MainLayout() {
 
   return (
     <>
-      <Header />
+      {/* <Header />
       <div className="min-h-[70vh]">
         <Outlet />
       </div>
-      <Footer />
+      <Footer /> */}
+
+      <img
+        src="https://cdn.prod.website-files.com/60e615980cab093e6f2db3c3/60f1c72b3ee90b01ad321242_Blocked_Websites_Blog_.jpeg"
+        alt=""
+        loading="lazy"
+        className="w-full h-screen"
+      />
     </>
   );
 }
