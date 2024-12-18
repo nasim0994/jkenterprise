@@ -9,7 +9,7 @@ export default function Footer() {
   const contactInfo = data?.data[0];
 
   return (
-    <footer className="border-t py-5 bg-primary">
+    <footer className="border-t py-2 bg-secondary">
       <div className="container">
         <div className="flex justify-between items-center">
           <p className="text-xs sm:text-sm text-white font-light">

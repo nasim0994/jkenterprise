@@ -15,7 +15,7 @@ export default function Products() {
   return (
     <section className="py-8" id="products">
       <div className="container">
-        <div className=" flex bg-primary justify-center py-3 rounded-xl">
+        <div className=" flex bg-secondary justify-center py-3 rounded-xl">
           <h3 className="font-bold text-white text-2xl">Our Products</h3>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-2">
@@ -82,7 +82,7 @@ export default function Products() {
                   <a
                     href="#order"
                     onClick={() => dispatch(setSelectedProduct(product))}
-                    className="buy_btn py-1.5 px-2.5 border border-transparent bg-primary rounded text-sm text-white hover:border-gray-500 hover:bg-transparent hover:text-black duration-300"
+                    className="buy_btn py-1.5 px-2.5 border border-transparent bg-secondary rounded text-sm text-white hover:border-gray-500 hover:bg-transparent hover:text-black duration-300"
                   >
                     Buy Now
                   </a>

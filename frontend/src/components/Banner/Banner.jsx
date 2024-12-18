@@ -1,10 +1,5 @@
 import { useGetBannerQuery } from "../../Redux/banner/banner";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper/modules";
-
 export default function Banner() {
   const { data } = useGetBannerQuery();
   const banner = data?.data;
@@ -24,36 +19,45 @@ export default function Banner() {
             <div className="mt-8">
               <a
                 href="#order"
-                className="bg-primary text-base-100 px-4 py-2 rounded"
+                className="bg-secondary text-base-100 px-4 py-2 rounded"
               >
-                এখানে অর্ডার করুন
+                অর্ডার করতে ক্লিক করুন
               </a>
             </div>
           </div>
 
-          <div className="-order-1 md:order-1">
-            <Swiper
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              pagination={true}
-              modules={[Autoplay, Pagination]}
-              loop={true}
-              grabCursor={true}
-            >
-              {banner?.galleries?.map((gallery) => (
-                <SwiperSlide key={gallery?._id}>
-                  <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/banner/${
-                      gallery?.url
-                    }`}
-                    alt={gallery?.title}
-                    className="w-full h-52 sm:h-80 object-cover rounded hover:cursor-grab"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+          <div className="-order-1 md:order-1 hidden sm:block">
+            {banner?.video ? (
+              <iframe
+                width="100%"
+                height="370"
+                src={`https://www.youtube.com/embed/${banner?.video}?autoplay=1&mute=1`}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                title="YouTube Video"
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{ borderRadius: "10px" }}
+              ></iframe>
+            ) : (
+              <div className="h-[370] bg-black">Loading...</div>
+            )}
+          </div>
+
+          <div className="-order-1 md:order-1  sm:hidden">
+            {banner?.video ? (
+              <iframe
+                width="100%"
+                height="260"
+                src={`https://www.youtube.com/embed/${banner?.video}?autoplay=1&mute=1`}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                title="YouTube Video"
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{ borderRadius: "10px" }}
+              ></iframe>
+            ) : (
+              <div className="h-[260] bg-black">Loading...</div>
+            )}
           </div>
         </div>
       </div>

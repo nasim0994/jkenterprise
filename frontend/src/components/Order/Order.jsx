@@ -185,7 +185,7 @@ export default function Order() {
                           src={`${import.meta.env.VITE_BACKEND_URL}/product/${
                             product?.img
                           }`}
-                          alt=""
+                          alt="product"
                           className="w-11 h-11 p-1"
                         />
                         <div>
@@ -262,17 +262,17 @@ export default function Order() {
                       <input
                         id="outsideDhaka"
                         type="radio"
-                        value="140"
+                        value="130"
                         name="shipping"
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600"
-                        onClick={() => setShipping(140)}
-                        defaultChecked={shipping == 140 && "checked"}
+                        onClick={() => setShipping(130)}
+                        defaultChecked={shipping == 130 && "checked"}
                       />
                       <label
                         htmlFor="outsideDhaka"
                         className="ms-2 text-sm font-medium"
                       >
-                        ঢাকার বাহিরে: ১৪০ টাকা
+                        ঢাকার বাহিরে: ১৩০ টাকা
                       </label>
                     </div>
                   </div>
@@ -297,7 +297,7 @@ export default function Order() {
                 </div>
 
                 <div className="mt-4">
-                  <button className="text-center w-full bg-primary text-base-100 rounded py-2.5 font-semibold">
+                  <button className="text-center w-full bg-secondary text-base-100 rounded py-2.5 font-semibold">
                     {isLoading
                       ? "Loading..."
                       : `অর্ডার কনফার্ম করুন - ${product ? total : "00"} টাকা`}

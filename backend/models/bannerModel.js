@@ -6,8 +6,8 @@ const bannerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    galleries: {
-      type: Array,
+    video: {
+      type: String,
       required: true,
     },
     description: {
