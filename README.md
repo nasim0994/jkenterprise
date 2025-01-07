@@ -1,4 +1,4 @@
-## ---------Backend 
+## Backend 
 
 ### env
     JWT_SECRET_KEY=
@@ -12,7 +12,7 @@
     product
 
 
-## ---------Backend 
+## Frontend 
 
 ### env
     VITE_BACKEND_URL=
