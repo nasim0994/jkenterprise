@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useCreateOrderMutation } from "../../Redux/order/orderApi";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearCart,
   removeFromCart,
   updateCartQuantity,
 } from "../../Redux/product/productSlice";
@@ -31,7 +32,7 @@ export default function Order() {
           ...item,
           quantity:
             action === "increment"
-              ? Math.min(item?.quantity + 1, item?.stock)
+              ? item?.quantity + 1
               : Math.max(item?.quantity - 1, 1),
         };
       }
@@ -86,6 +87,8 @@ export default function Order() {
         "Your order has been placed successfully.",
         "success"
       );
+
+      dispatch(clearCart());
     } else {
       Swal.fire(
         "Order Failed!",

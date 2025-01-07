@@ -168,7 +168,6 @@ export default function Products() {
       discountPrice: product?.discountPrice,
       img: product?.img,
       quantity: 1,
-      stock: product?.stock,
     };
 
     if (carts?.length > 0) {
@@ -193,7 +192,7 @@ export default function Products() {
           ...item,
           quantity:
             action === "increment"
-              ? Math.min(item?.quantity + 1, item?.stock)
+              ? item?.quantity + 1
               : Math.max(item?.quantity - 1, 1),
         };
       }
