@@ -8,10 +8,12 @@ import {
   removeFromCart,
   updateCartQuantity,
 } from "../../Redux/product/productSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Order() {
   const orderRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const carts = useSelector((state) => state.product.carts);
 
@@ -89,6 +91,7 @@ export default function Order() {
       );
 
       dispatch(clearCart());
+      navigate(`/order/success/${res?.data?.data?._id}`);
     } else {
       Swal.fire(
         "Order Failed!",
