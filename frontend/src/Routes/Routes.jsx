@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import React, { Suspense } from "react";
 import Spinner from "../components/Spinner/Spinner";
 import OrderSuccess from "../pages/OrderSuccess/OrderSuccess";
+import OrderDetails from "../pages/Admin/Orders/OrderDetails";
 
 // Lazy-loaded components
 const AdminLayout = React.lazy(() => import("../Layout/AdminLayout"));
@@ -20,9 +21,7 @@ const AddAdministrator = React.lazy(() =>
   import("../pages/Admin/Administrator/AddAdministrator")
 );
 const Orders = React.lazy(() => import("../pages/Admin/Orders/Orders"));
-const OrderDetails = React.lazy(() =>
-  import("../pages/Admin/OrderDetails/OrderDetails")
-);
+
 const OrderPrint = React.lazy(() =>
   import("../pages/Admin/OrderPrint/OrderPrint")
 );

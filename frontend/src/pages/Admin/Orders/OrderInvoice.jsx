@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import Order from "../../../components/AdminComponents/Order/Order";
 
-export default function OrderDetails() {
+export default function OrderInvoice() {
   const { id } = useParams();
   return (
     <section className="py-5">
