@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdArrowDropUp, MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useCreateOrderMutation } from "../../Redux/order/orderApi";
@@ -9,15 +9,45 @@ import {
   updateCartQuantity,
 } from "../../Redux/product/productSlice";
 import { useNavigate } from "react-router-dom";
+import { useGetBusinessQuery } from "../../Redux/businessInfo/businessInfo";
+import TagManager from "react-gtm-module";
 
 export default function Order() {
   const orderRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [shipping, setShipping] = useState(80);
   const carts = useSelector((state) => state.product.carts);
 
-  const [shipping, setShipping] = useState(80);
+  const { data } = useGetBusinessQuery();
+  const shippingCharge = data?.data[0]?.shipping;
+
+  useEffect(() => {
+    if (shippingCharge) {
+      setShipping(shippingCharge?.insideDhaka);
+    }
+  }, [shippingCharge]);
+
+  function convertToBanglaNumber(number) {
+    const englishToBanglaMap = {
+      0: "০",
+      1: "১",
+      2: "২",
+      3: "৩",
+      4: "৪",
+      5: "৫",
+      6: "৬",
+      7: "৭",
+      8: "৮",
+      9: "৯",
+    };
+
+    return number
+      .toString()
+      .split("")
+      .map((digit) => englishToBanglaMap[digit] || digit)
+      .join("");
+  }
 
   const [createOrder, { isLoading }] = useCreateOrderMutation();
 
@@ -51,6 +81,58 @@ export default function Order() {
       0
     );
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (carts?.length > 0) {
+              TagManager.dataLayer({
+                dataLayer: {
+                  event: "checkout",
+                  checkout: {
+                    customer: {
+                      name: "",
+                      phone: "",
+                    },
+                    ecommerce: {
+                      currency: "BDT",
+                      value: calculateTotal(),
+                      shipping,
+
+                      items: [
+                        carts?.map((product) => ({
+                          item_id: product?.id,
+                          item_name: product?.title,
+                          price: product?.price,
+                          discountPrice: product?.discountPrice,
+                          quantity: product?.quantity,
+                        })),
+                      ],
+                    },
+                  },
+                },
+              });
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    if (orderRef.current) {
+      observer.observe(orderRef.current);
+    }
+
+    return () => {
+      if (orderRef.current) {
+        observer.unobserve(orderRef.current);
+      }
+    };
+  }, []);
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -223,34 +305,46 @@ export default function Order() {
                       <input
                         id="insideDhaka"
                         type="radio"
-                        value="80"
+                        value={shippingCharge?.insideDhaka}
                         name="shipping"
                         className="w-4 h-4"
-                        onClick={() => setShipping(80)}
-                        defaultChecked={shipping === 80}
+                        onClick={() => setShipping(shippingCharge?.insideDhaka)}
+                        checked={shipping === shippingCharge?.insideDhaka}
                       />
                       <label
                         htmlFor="insideDhaka"
                         className="ms-2 text-sm font-medium"
                       >
-                        ঢাকার ভিতরে: ৮০ টাকা
+                        ঢাকার ভিতরে:{" "}
+                        {shippingCharge?.insideDhaka &&
+                          convertToBanglaNumber(
+                            shippingCharge?.insideDhaka
+                          )}{" "}
+                        টাকা
                       </label>
                     </div>
                     <div className="flex items-center">
                       <input
                         id="outsideDhaka"
                         type="radio"
-                        value="130"
+                        value={shippingCharge?.outsideDhaka}
                         name="shipping"
                         className="w-4 h-4"
-                        onClick={() => setShipping(130)}
-                        defaultChecked={shipping === 130}
+                        onClick={() =>
+                          setShipping(shippingCharge?.outsideDhaka)
+                        }
+                        checked={shipping === shippingCharge?.outsideDhaka}
                       />
                       <label
                         htmlFor="outsideDhaka"
                         className="ms-2 text-sm font-medium"
                       >
-                        ঢাকার বাহিরে: ১৩০ টাকা
+                        ঢাকার বাহিরে:{" "}
+                        {shippingCharge?.outsideDhaka &&
+                          convertToBanglaNumber(
+                            shippingCharge?.outsideDhaka
+                          )}{" "}
+                        টাকা
                       </label>
                     </div>
                   </div>

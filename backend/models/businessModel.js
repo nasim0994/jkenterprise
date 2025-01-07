@@ -23,6 +23,16 @@ const businessSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    shipping: {
+      insideDhaka: {
+        type: Number,
+        required: true,
+      },
+      outsideDhaka: {
+        type: Number,
+        required: true,
+      },
+    },
   },
   { timestamps: true }
 );
