@@ -6,7 +6,7 @@ export default function Header() {
   const logo = data?.data[0];
 
   return (
-    <header className="py-2 2xl:py-1 border-b border-primary bg-secondary/10">
+    <header className="py-2 2xl:py-1 border-b border-primary bg-primary/10">
       <div className="container">
         <div className="flex justify-between items-center">
           <Link to="/">

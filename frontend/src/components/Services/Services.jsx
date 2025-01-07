@@ -38,7 +38,7 @@ export default function Services() {
         <div className="mt-8 flex justify-center">
           <a
             href="#order"
-            className="bg-secondary text-base-100 px-4 py-2 rounded"
+            className="bg-primary text-base-100 px-4 py-2 rounded"
           >
             অর্ডার করতে ক্লিক করুন
           </a>

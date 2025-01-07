@@ -49,7 +49,6 @@ export default function ProductsList() {
         {products?.map((product, i) => (
           <tr key={product?._id}>
             <td>{i + 1}</td>
-            <td>{product?.title}</td>
             <td>
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/product/${
@@ -59,6 +58,9 @@ export default function ProductsList() {
                 className="w-14 h-8 rounded"
               />
             </td>
+            <td>{product?.title}</td>
+            <td>{product?.price}</td>
+            <td>{product?.discountPrice}</td>
             <td>
               <div className="flex gap-3 items-center">
                 <Link to={`/admin/product/edit/${product?._id}`}>
@@ -91,8 +93,10 @@ export default function ProductsList() {
           <thead>
             <tr>
               <th>SL</th>
-              <th>Title</th>
               <th>Image</th>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Discount Price</th>
               <th>Action</th>
             </tr>
           </thead>

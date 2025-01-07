@@ -1,10 +1,7 @@
-import { useDispatch } from "react-redux";
-import { setSelectedProduct } from "../../Redux/product/productSlice";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import parser from "html-react-parser";
 
 export default function ProductModal({ showModal, setShowModal, product }) {
-  const dispatch = useDispatch();
-
   return (
     <>
       <button
@@ -34,22 +31,24 @@ export default function ProductModal({ showModal, setShowModal, product }) {
           </h2>
 
           <div className="mt-2 mb-4 flex justify-between items-center">
-            <p className="font-semibold text-xl text-green-700">
-              Price: {product?.price} ৳
-            </p>
-
-            <a
-              href="#order"
-              onClick={() => {
-                dispatch(setSelectedProduct(product));
-                setShowModal(false);
-              }}
-              className="primary_btn text-sm"
-            >
-              Buy Now
-            </a>
+            <div>
+              {product?.discountPrice > 0 ? (
+                <div className="flex items-center gap-2">
+                  <p className="font-semibold">
+                    Price: {product?.discountPrice}৳
+                  </p>
+                  <del className="font-semibold text-sm text-red-500">
+                    {product?.price}৳
+                  </del>
+                </div>
+              ) : (
+                <p className="font-semibold">Price: {product?.price} ৳</p>
+              )}
+            </div>
           </div>
-          <p className="text-sm text-gray-600">{product?.description}</p>
+          <p className="text-sm text-gray-600">
+            {product?.description && parser(product?.description)}
+          </p>
         </div>
       </div>
     </>

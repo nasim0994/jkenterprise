@@ -25,11 +25,16 @@ const productRouter = require("./routes/productRoutes.js");
 const featureSection = require("./routes/featureSectionRoutes.js");
 const featureRouter = require("./routes/featureRoutes.js");
 const seoRouter = require("./routes/seoRoutes.js");
+const { defaultAdminCreate } = require("./controllers/userController.js");
 
 // Connect Database
-mongoose.connect(process.env.DB_URL).then(() => {
-  console.log("Database connection is successful");
-});
+mongoose
+  .connect(process.env.DB_URL)
+  .then(() => {
+    console.log("Database connection is successful");
+    defaultAdminCreate();
+  })
+  .catch((error) => console.error("MongoDB connection error:", error));
 
 app.use("/user", userRoutes);
 app.use("/order", orderRouter);

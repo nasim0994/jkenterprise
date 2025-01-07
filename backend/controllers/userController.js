@@ -39,6 +39,32 @@ exports.addAdmin = async (req, res) => {
   }
 };
 
+exports.defaultAdminCreate = async (req, res) => {
+  try {
+    const isExists = await User.findOne();
+
+    if (!isExists) {
+      const hashedPassword = await bcrypt.hash("12345678", 10);
+
+      const admin = new User({
+        name: "Default Admin",
+        username: "admin",
+        email: "admin@example.com",
+        password: hashedPassword,
+        role: "admin",
+      });
+
+      await admin.save();
+      console.log("Default admin user created successfully");
+    }
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 exports.deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;

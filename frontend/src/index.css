@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
-  --primary: #227cb8;
-  --secondary: #e866be;
+  --primary: #b94694;
+  --secondary: #f9e5fe;
   --accent: #031a2f;
   --neutral: #404145;
   --neutralContent: #575757;
@@ -43,8 +43,8 @@ h2 {
 }
 
 .primary_btn {
-  background: var(--secondary);
-  border: 2px solid var(--secondary);
+  background: var(--primary);
+  border: 2px solid var(--primary);
   color: #fff;
   padding: 9px 20px;
   border-radius: 10px;
@@ -55,7 +55,7 @@ h2 {
 
 .primary_btn:hover {
   background: transparent;
-  color: var(--secondary);
+  color: var(--primary);
 }
 
 /* ---------------------Modal------------ */
@@ -180,4 +180,12 @@ table tbody td {
   .pagination-container button {
     margin: 4px;
   }
+}
+
+.jodit-wysiwyg {
+  min-height: 400px !important;
+}
+
+.jodit-status-bar {
+  display: none !important;
 }

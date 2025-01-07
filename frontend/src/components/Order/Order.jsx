@@ -1,64 +1,64 @@
-import { useEffect, useRef, useState } from "react";
-import { MdArrowDropUp, MdAddCall } from "react-icons/md";
+import { useRef, useState } from "react";
+import { MdArrowDropUp, MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useCreateOrderMutation } from "../../Redux/order/orderApi";
-import { useGetBusinessQuery } from "../../Redux/businessInfo/businessInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedProduct } from "../../Redux/product/productSlice";
-import TagManager from "react-gtm-module";
+import {
+  removeFromCart,
+  updateCartQuantity,
+} from "../../Redux/product/productSlice";
 
 export default function Order() {
   const orderRef = useRef(null);
-  const { data } = useGetBusinessQuery();
-  const contactInfo = data?.data[0];
-
-  const product = useSelector((state) => state.product?.selectedProduct);
   const dispatch = useDispatch();
 
-  const [quantity, setQuantity] = useState(1);
+  const carts = useSelector((state) => state.product.carts);
+
   const [shipping, setShipping] = useState(80);
-  const [validPhone, setValidPhone] = useState("");
-
-  const total = product?.price * quantity + shipping;
-
-  useEffect(() => {
-    if (product) {
-      TagManager.dataLayer({
-        dataLayer: {
-          event: "checkout",
-          checkout: {
-            currency: "BDT",
-            items: [
-              {
-                item_id: product?._id,
-                item_name: product?.title,
-                price: product?.price,
-                quantity: quantity,
-              },
-            ],
-          },
-        },
-      });
-    }
-  }, [product, quantity, total]);
 
   const [createOrder, { isLoading }] = useCreateOrderMutation();
 
+  const handleRemoveProduct = (productId) => {
+    const newCarts = carts?.filter((product) => product?.id !== productId);
+    dispatch(removeFromCart(newCarts));
+  };
+
+  // Update quantity
+  const handleQuantityChange = (id, action) => {
+    const updatedCart = carts.map((item) => {
+      if (item?.id === id) {
+        return {
+          ...item,
+          quantity:
+            action === "increment"
+              ? Math.min(item?.quantity + 1, item?.stock)
+              : Math.max(item?.quantity - 1, 1),
+        };
+      }
+      return item;
+    });
+
+    dispatch(updateCartQuantity(updatedCart));
+  };
+
+  // Calculate total price
+  const calculateTotal = () => {
+    return carts.reduce(
+      (total, product) => total + product?.quantity * product?.discountPrice,
+      0
+    );
+  };
+
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
+
     const form = e.target;
     const name = form.name.value;
     const phone = form.number.value;
     const city = form.city.value;
     const address = form.address.value;
 
-    if (phone?.length !== 11) {
-      return setValidPhone("please provide valid phone number");
-    } else {
-      setValidPhone("");
-    }
-
-    if (!product) {
+    if (carts?.length === 0) {
       return Swal.fire("", "Please select a product", "warning");
     }
 
@@ -67,64 +67,39 @@ export default function Order() {
       phone,
       city,
       address,
-      quantity,
+      products: carts?.map((product) => {
+        return {
+          product: product?.id,
+          quantity: product?.quantity,
+        };
+      }),
       shipping,
-      total,
-      product: {
-        id: product?._id,
-        title: product?.title,
-        price: product?.price,
-        img: product?.img,
-      },
+      total: calculateTotal() + shipping,
     };
 
     const res = await createOrder(orderInfo);
 
-    if (res?.error) {
-      return Swal.fire(
-        "",
-        res?.error?.data?.message
-          ? res?.error?.data?.message
-          : "something went wrong",
+    if (res?.data?.success) {
+      form.reset();
+      Swal.fire(
+        "Order Placed!",
+        "Your order has been placed successfully.",
+        "success"
+      );
+    } else {
+      Swal.fire(
+        "Order Failed!",
+        "Something went wrong. Please try again.",
         "error"
       );
     }
-
-    if (res?.data?.success) {
-      Swal.fire("", "Order create success", "success");
-      form.reset();
-      setQuantity(1);
-      dispatch(setSelectedProduct(undefined));
-      TagManager.dataLayer({
-        dataLayer: {
-          event: "purchase",
-          purchase: {
-            transaction_id: res?.data?.data?._id,
-            value: total,
-            currency: "BDT",
-            items: [
-              {
-                item_id: product?.id,
-                item_name: product?.title,
-                price: product?.price,
-                quantity: quantity,
-              },
-            ],
-            user_name: name,
-            user_city: city,
-            user_state: address,
-            user_country: "Bangladesh",
-            user_phone_number: phone,
-          },
-        },
-      });
-    }
+    console.log(res);
   };
 
   return (
     <section ref={orderRef} className="py-5 sm:py-10" id="order">
       <div className="container">
-        <div className="border-2 border-primary rounded p-5 sm:p-10 bg-secondary/20">
+        <div className="border-2 border-primary rounded p-5 sm:p-10 bg-secondary">
           <h2 className="sm:text-xl font-semibold text-center">
             অর্ডার করতে আপনার সঠিক তথ্য দিয়ে নিচের ফর্মটি সম্পূর্ণ পূরন করুন।
             <br /> (আগে থেকে কোন টাকা দেয়া লাগবে না। প্রোডাক্ট হাতে পাবার পর
@@ -150,10 +125,7 @@ export default function Order() {
                   <small className="text-neutral-content">
                     আপনার মোবাইল নাম্বারটি লিখুন *
                   </small>
-                  <input type="number" name="number" required />
-                  {validPhone && (
-                    <small className="text-red-500">{validPhone}</small>
-                  )}
+                  <input type="text" name="number" required />
                 </div>
 
                 <div>
@@ -172,74 +144,74 @@ export default function Order() {
               </div>
             </div>
 
-            {/*  */}
             <div>
               <h2 className="text-lg font-medium">Your Order</h2>
-
               <div>
-                <div className="flex justify-between items-center border-b py-2 border-dashed border-gray-400">
-                  {product ? (
-                    <>
-                      <div className="flex items-center gap-1">
-                        <img
-                          src={`${import.meta.env.VITE_BACKEND_URL}/product/${
-                            product?.img
-                          }`}
-                          alt="product"
-                          className="w-11 h-11 p-1"
-                        />
+                {carts.map((product) => (
+                  <div
+                    key={product?.id}
+                    className="flex justify-between items-center border-b py-2 border-dashed border-gray-400"
+                  >
+                    <div className="w-full flex items-center justify-between gap-1">
+                      <div className="flex items-center gap-2">
                         <div>
-                          <p className="text-neutral text-[15px]">
-                            {product?.title}
-                          </p>
+                          <MdDelete
+                            onClick={() => handleRemoveProduct(product?.id)}
+                            className="text-red-500 cursor-pointer text-xl"
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={
+                              import.meta.env.VITE_BACKEND_URL +
+                              "/product/" +
+                              product?.img
+                            }
+                            alt="product"
+                            className="w-11 h-11 rounded"
+                          />
+
+                          <div>
+                            <p className="text-neutral text-[15px]">
+                              {product?.title}
+                            </p>
+
+                            <div className="mt-1 flex items-center gap-2">
+                              <div
+                                onClick={() =>
+                                  handleQuantityChange(product?.id, "decrement")
+                                }
+                                className="px-1.5 border cursor-pointer border-neutral rounded"
+                              >
+                                -
+                              </div>
+                              <span>{product.quantity}</span>
+                              <div
+                                onClick={() =>
+                                  handleQuantityChange(product?.id, "increment")
+                                }
+                                className="px-1.5 border border-neutral rounded cursor-pointer"
+                              >
+                                +
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div>
-                        <p>{product?.price} টাকা</p>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="font-semibold text-xl w-full text-center border bg-gray-200 rounded-lg py-4 mb-4">
-                      <a href="#products">Please select a Product</a>
-                    </div>
-                  )}
-                </div>
 
-                <div className="flex justify-between items-center border-b py-2.5 border-dashed border-gray-400">
-                  <p className="text-neutral-content">Quantity</p>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-2 text-sm text-neutral-content">
-                      <div
-                        onClick={() => {
-                          if (quantity > 1) {
-                            setQuantity(quantity - 1);
-                          }
-                        }}
-                        className="cursor-pointer bg-gray-100 px-1.5 rounded hover:bg-gray-200 duration-200"
-                      >
-                        -
-                      </div>
-                      <div>{quantity}</div>
-                      <div
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="cursor-pointer bg-gray-100 px-1.5 rounded hover:bg-gray-200 duration-200"
-                      >
-                        +
-                      </div>
+                      <p>{product?.discountPrice} টাকা</p>
                     </div>
                   </div>
-                </div>
-
+                ))}
                 <div className="flex justify-between items-center border-b py-2.5 border-dashed border-gray-400">
                   <p className="text-neutral-content">Subtotal</p>
                   <p className="text-primary flex items-center gap-px">
-                    {product ? quantity * product?.price : "00"} টাকা
+                    {calculateTotal()} টাকা
                   </p>
                 </div>
-
                 <div className="flex justify-between items-center border-b py-2.5 border-dashed border-gray-400">
                   <p className="text-neutral-content">Shipping</p>
-
                   <div>
                     <div className="flex items-center text-neutral">
                       <input
@@ -247,9 +219,9 @@ export default function Order() {
                         type="radio"
                         value="80"
                         name="shipping"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 "
+                        className="w-4 h-4"
                         onClick={() => setShipping(80)}
-                        defaultChecked={shipping == 80 && "checked"}
+                        defaultChecked={shipping === 80}
                       />
                       <label
                         htmlFor="insideDhaka"
@@ -264,9 +236,9 @@ export default function Order() {
                         type="radio"
                         value="130"
                         name="shipping"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600"
+                        className="w-4 h-4"
                         onClick={() => setShipping(130)}
-                        defaultChecked={shipping == 130 && "checked"}
+                        defaultChecked={shipping === 130}
                       />
                       <label
                         htmlFor="outsideDhaka"
@@ -277,10 +249,11 @@ export default function Order() {
                     </div>
                   </div>
                 </div>
-
                 <div className="flex justify-between items-center mt-2 font-medium text-lg">
                   <p className="text-neutral-content">Total</p>
-                  <p className="text-primary">{product ? total : "00"} টাকা</p>
+                  <p className="text-primary">
+                    {calculateTotal() + shipping} টাকা
+                  </p>
                 </div>
 
                 <div className="mt-4 bg-gray-100 p-4 rounded text-neutral-content">
@@ -297,23 +270,17 @@ export default function Order() {
                 </div>
 
                 <div className="mt-4">
-                  <button className="text-center w-full bg-secondary text-base-100 rounded py-2.5 font-semibold">
+                  <button className="text-center w-full bg-primary text-base-100 rounded py-2.5 font-semibold">
                     {isLoading
                       ? "Loading..."
-                      : `অর্ডার কনফার্ম করুন - ${product ? total : "00"} টাকা`}
+                      : `অর্ডার কনফার্ম করুন - ${
+                          calculateTotal() + shipping
+                        } টাকা`}
                   </button>
                 </div>
               </div>
             </div>
           </form>
-        </div>
-
-        <div className="mt-2 sm:mt-10 sm:text-xl font-semibold flex flex-col justify-center items-center text-center">
-          <p>অর্ডার করতে অথবা বিস্তারিত জানতে সরাসরি কল করুনঃ</p>
-          <span className="flex text-primary items-center gap-1 text-lg sm:text-2xl">
-            <MdAddCall />
-            <span className="whitespace-nowrap">{contactInfo?.phone}</span>
-          </span>
         </div>
       </div>
     </section>
