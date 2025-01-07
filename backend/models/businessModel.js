@@ -4,13 +4,13 @@ const businessSchema = new mongoose.Schema(
   {
     companyName: {
       type: String,
-      required: true
+      required: true,
     },
     phone: {
       type: String,
-      required: true
+      required: true,
     },
-    email:{
+    email: {
       type: String,
     },
     facebook: {
@@ -18,6 +18,10 @@ const businessSchema = new mongoose.Schema(
     },
     whatsapp: {
       type: String,
+    },
+    address: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

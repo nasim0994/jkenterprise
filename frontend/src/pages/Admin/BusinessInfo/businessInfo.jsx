@@ -23,6 +23,7 @@ export default function businessInfo() {
     const email = e.target.email.value;
     const facebook = e.target.facebook.value;
     const whatsapp = e.target.whatsapp.value;
+    const address = e.target.address.value;
 
     const info = {
       companyName,
@@ -30,6 +31,7 @@ export default function businessInfo() {
       email,
       facebook,
       whatsapp,
+      address,
     };
 
     if (id) {
@@ -98,6 +100,16 @@ export default function businessInfo() {
               name="whatsapp"
               required
               defaultValue={businessInfo?.whatsapp}
+            />
+          </div>
+
+          <div>
+            <p className="mb-1">Address</p>
+            <input
+              type="text"
+              name="address"
+              required
+              defaultValue={businessInfo?.address}
             />
           </div>
         </div>

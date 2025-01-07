@@ -18,7 +18,7 @@ export default function Products() {
         <div className=" flex bg-secondary justify-center py-3 rounded-xl">
           <h3 className="font-bold text-white text-2xl">Our Products</h3>
         </div>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-2">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5">
           {products?.map((product) => (
             <div
               key={product?._id}

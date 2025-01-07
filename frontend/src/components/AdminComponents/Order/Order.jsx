@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetOrderByIdQuery } from "../../../Redux/order/orderApi";
 import Spinner from "../../Spinner/Spinner";
 import { useGetLogosQuery } from "../../../Redux/logo/logoApi";
+import { useGetBusinessQuery } from "../../../Redux/businessInfo/businessInfo";
 
 export default function Order() {
   const { id } = useParams();
@@ -9,6 +10,9 @@ export default function Order() {
 
   const { data: logoInfo } = useGetLogosQuery();
   const logo = logoInfo?.data[0];
+
+  const { data: contactInfo } = useGetBusinessQuery();
+  const contact = contactInfo?.data[0];
 
   if (isLoading) {
     return <Spinner />;
@@ -27,11 +31,11 @@ export default function Order() {
         <div className="text-neutral-content text-sm">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}/logo/${logo?.logo}`}
-            alt=""
+            alt="logo"
             className="w-36"
           />
-          <p>01977-779279</p>
-          <p>Zigatola, Dhaka, Bangladesh</p>
+          <p>{contact?.phone}</p>
+          <p>{contact?.address}</p>
         </div>
 
         <div>
