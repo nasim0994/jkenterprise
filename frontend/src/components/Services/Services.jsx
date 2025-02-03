@@ -11,7 +11,7 @@ export default function Services() {
     <section className="py-5 sm:py-8 bg-primary/5">
       <div className="container">
         <h2 className="text-3xl sm:text-4xl text-primary font-bold text-center">
-          {section?.data?.title || "আমাদের সেবাসমূহ"}
+          {section?.data?.title || "Our Services"}
         </h2>
 
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-6">
@@ -40,7 +40,7 @@ export default function Services() {
             href="#order"
             className="bg-primary text-base-100 px-4 py-2 rounded"
           >
-            অর্ডার করতে ক্লিক করুন
+            Click to order
           </a>
         </div>
       </div>

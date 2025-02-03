@@ -242,8 +242,8 @@ export default function Products() {
                       setShowModal(!showModal);
                     }}
                   >
-                    {product?.title?.length > 30
-                      ? product?.title.slice(0, 30) + "..."
+                    {product?.title?.length > 50
+                      ? product?.title.slice(0, 50) + "..."
                       : product?.title}
                   </h2>
 

@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="flex justify-between items-center">
           <p className="text-xs sm:text-sm text-white font-light">
             Copyright © 2024 {contactInfo?.companyName}. All rights reserved.
-            Powered by{" "}
+            Developed by{" "}
             <Link
               to="https://emanagerit.com"
               target="_blank"

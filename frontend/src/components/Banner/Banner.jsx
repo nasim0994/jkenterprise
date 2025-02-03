@@ -21,7 +21,7 @@ export default function Banner() {
                 href="#order"
                 className="bg-primary text-base-100 px-4 py-2 rounded"
               >
-                অর্ডার করতে ক্লিক করুন
+                Click to order
               </a>
             </div>
           </div>

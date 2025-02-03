@@ -28,27 +28,6 @@ export default function Order() {
     }
   }, [shippingCharge]);
 
-  function convertToBanglaNumber(number) {
-    const englishToBanglaMap = {
-      0: "০",
-      1: "১",
-      2: "২",
-      3: "৩",
-      4: "৪",
-      5: "৫",
-      6: "৬",
-      7: "৭",
-      8: "৮",
-      9: "৯",
-    };
-
-    return number
-      .toString()
-      .split("")
-      .map((digit) => englishToBanglaMap[digit] || digit)
-      .join("");
-  }
-
   const [createOrder, { isLoading }] = useCreateOrderMutation();
 
   const handleRemoveProduct = (productId) => {
@@ -189,9 +168,10 @@ export default function Order() {
       <div className="container">
         <div className="border-2 border-primary rounded p-5 sm:p-10 bg-secondary">
           <h2 className="sm:text-xl font-semibold text-center">
-            অর্ডার করতে আপনার সঠিক তথ্য দিয়ে নিচের ফর্মটি সম্পূর্ণ পূরন করুন।
-            <br /> (আগে থেকে কোন টাকা দেয়া লাগবে না। প্রোডাক্ট হাতে পাবার পর
-            টাকা দিবেন)
+            To order, please fill out the form below with your correct
+            information. <br />
+            (No advance payment is required. Payment will be made upon receipt
+            of the product)
           </h2>
 
           <form
@@ -204,28 +184,28 @@ export default function Order() {
               <div className="flex flex-col gap-3">
                 <div>
                   <small className="text-neutral-content">
-                    আপনার নাম লিখুন *
+                    Enter your name *
                   </small>
                   <input type="text" name="name" required />
                 </div>
 
                 <div>
                   <small className="text-neutral-content">
-                    আপনার মোবাইল নাম্বারটি লিখুন *
+                    Enter your mobile number *
                   </small>
                   <input type="text" name="number" required />
                 </div>
 
                 <div>
                   <small className="text-neutral-content">
-                    আপনার শহরের নাম লিখুন *
+                    Enter your city *
                   </small>
                   <input type="text" name="city" required />
                 </div>
 
                 <div>
                   <small className="text-neutral-content">
-                    আপনার সম্পূর্ণ ঠিকানা লিখুন *
+                    Enter your full address *
                   </small>
                   <textarea name="address" rows="4" required></textarea>
                 </div>
@@ -288,20 +268,20 @@ export default function Order() {
                         </div>
                       </div>
 
-                      <p>{product?.discountPrice} টাকা</p>
+                      <p>{product?.discountPrice} TK</p>
                     </div>
                   </div>
                 ))}
                 <div className="flex justify-between items-center border-b py-2.5 border-dashed border-gray-400">
                   <p className="text-neutral-content">Subtotal</p>
                   <p className="text-primary flex items-center gap-px">
-                    {calculateTotal()} টাকা
+                    {calculateTotal()} TK
                   </p>
                 </div>
-                <div className="flex justify-between items-center border-b py-2.5 border-dashed border-gray-400">
+                <div className="flex justify-between items-center border-b py-2.5 border-dashed border-gray-400 ">
                   <p className="text-neutral-content">Shipping</p>
-                  <div>
-                    <div className="flex items-center text-neutral">
+                  <div className="text-neutral">
+                    <div className="flex items-center">
                       <input
                         id="insideDhaka"
                         type="radio"
@@ -315,12 +295,7 @@ export default function Order() {
                         htmlFor="insideDhaka"
                         className="ms-2 text-sm font-medium"
                       >
-                        ঢাকার ভিতরে:{" "}
-                        {shippingCharge?.insideDhaka &&
-                          convertToBanglaNumber(
-                            shippingCharge?.insideDhaka
-                          )}{" "}
-                        টাকা
+                        Inside Dhaka: {shippingCharge?.insideDhaka} TK
                       </label>
                     </div>
                     <div className="flex items-center">
@@ -339,12 +314,7 @@ export default function Order() {
                         htmlFor="outsideDhaka"
                         className="ms-2 text-sm font-medium"
                       >
-                        ঢাকার বাহিরে:{" "}
-                        {shippingCharge?.outsideDhaka &&
-                          convertToBanglaNumber(
-                            shippingCharge?.outsideDhaka
-                          )}{" "}
-                        টাকা
+                        Outside Dhaka: {shippingCharge?.outsideDhaka} TK
                       </label>
                     </div>
                   </div>
@@ -352,15 +322,15 @@ export default function Order() {
                 <div className="flex justify-between items-center mt-2 font-medium text-lg">
                   <p className="text-neutral-content">Total</p>
                   <p className="text-primary">
-                    {calculateTotal() + shipping} টাকা
+                    {calculateTotal() + shipping} TK
                   </p>
                 </div>
 
                 <div className="mt-4 bg-gray-100 p-4 rounded text-neutral-content">
-                  <h2>ক্যাশ অন ডেলিভারি</h2>
+                  <h2>Cash on delivery</h2>
                   <div className="relative bg-gray-200 p-3 rounded mt-3">
                     <p className="text-sm">
-                      পণ্য হাতে পেয়ে ডেলিভারি ম্যানকে পেমেন্ট করতে পারবেন।
+                      You can pay the delivery man after receiving the product.
                     </p>
 
                     <div className="absolute -top-8 left-6">
@@ -373,9 +343,7 @@ export default function Order() {
                   <button className="text-center w-full bg-primary text-base-100 rounded py-2.5 font-semibold">
                     {isLoading
                       ? "Loading..."
-                      : `অর্ডার কনফার্ম করুন - ${
-                          calculateTotal() + shipping
-                        } টাকা`}
+                      : `Confirm order - ${calculateTotal() + shipping} TK`}
                   </button>
                 </div>
               </div>
