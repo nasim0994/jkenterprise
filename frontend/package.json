@@ -1,6 +1,6 @@
 {
-  "name": "auradhaka",
-  "homepage": "https://auradhaka.com",
+  "name": "aurora",
+  "homepage": "https://auroracollectionbd.com",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -10,6 +10,12 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "keywords": [
+    "aurora",
+    "aurora collection",
+    "Aurora Collection",
+    "Welcome to the official page Aurora You’ll always have a great selection with all the latest trends"
+  ],
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "html-react-parser": "^5.2.2",
