@@ -1,6 +1,6 @@
 {
-  "name": "aurora",
-  "homepage": "https://auroracollectionbd.com",
+  "name": "venture",
+  "homepage": "https://venturecommunicationsbd.com",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -11,10 +11,10 @@
     "preview": "vite preview"
   },
   "keywords": [
-    "aurora",
-    "aurora collection",
-    "Aurora Collection",
-    "Welcome to the official page Aurora You’ll always have a great selection with all the latest trends"
+    "venture",
+    "venture Communications",
+    "venturecommunicationsbd.com",
+    "venturecommunicationsbd"
   ],
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
