@@ -1,1 +1,0 @@
-import{j as r}from"./index-5e621d87.js";import{O as e}from"./OrderTable-07decd01.js";function i(){return r.jsx("section",{children:r.jsx("div",{className:"container",children:r.jsx(e,{})})})}export{i as default};
