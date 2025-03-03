@@ -7,9 +7,9 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000,
   },
   server: {
-    port: 4200,
+    port: 4700,
   },
   preview: {
-    port: 4200,
+    port: 4700,
   },
 });

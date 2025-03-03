@@ -69,6 +69,30 @@ export default function App() {
           content={seoData?.basic?.subject || "Your Page Subject"}
         />
 
+        {/* <!-- og --> */}
+        <meta property="og:title" content={seoData?.basic?.title} />
+        <meta property="og:description" content={seoData?.basic?.description} />
+        <meta
+          property="og:image"
+          content={`${import.meta.env.VITE_BACKEND_URL}/favicon/${icon}`}
+        />
+        <meta property="og:url" content="https://jkenterprisebd.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="jkenterprisebd" />
+
+        {/* <!-- twitter --> */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@jkenterprisebd" />
+        <meta name="twitter:title" content={seoData?.basic?.title} />
+        <meta
+          name="twitter:description"
+          content={seoData?.basic?.description}
+        />
+        <meta
+          name="twitter:image"
+          content={`${import.meta.env.VITE_BACKEND_URL}/favicon/${icon}`}
+        />
+
         {seoData?.basic?.copyright && (
           <meta name="copyright" content={seoData?.basic?.copyright} />
         )}
@@ -86,7 +110,7 @@ export default function App() {
         {seoData?.custom?.google_site_verification && (
           <meta
             name="google-site-verification"
-            content={seoData?.custom?.google_site_verificatio}
+            content={seoData?.custom?.google_site_verification}
           />
         )}
 

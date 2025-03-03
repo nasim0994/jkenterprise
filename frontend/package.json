@@ -1,6 +1,6 @@
 {
-  "name": "venture",
-  "homepage": "https://venturecommunicationsbd.com",
+  "name": "jkenterprise",
+  "homepage": "https://jkenterprisebd.com",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -11,10 +11,9 @@
     "preview": "vite preview"
   },
   "keywords": [
-    "venture",
-    "venture Communications",
-    "venturecommunicationsbd.com",
-    "venturecommunicationsbd"
+    "jkenterprise",
+    "jkenterprisebd.com",
+    "www.jkenterprisebd.com"
   ],
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",

@@ -1,5 +1,5 @@
 {
-  "name": "venture",
+  "name": "jkenterprise",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,11 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "jkenterprise",
+    "jkenterprisebd.com",
+    "www.jkenterprisebd.com"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
