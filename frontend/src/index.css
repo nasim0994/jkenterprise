@@ -5,10 +5,10 @@
 @tailwind utilities;
 
 :root {
-  --primary: #cda317;
+  --primary: #e8b100;
   --secondary: #026bbc;
   --accent: #031a2f;
-  --neutral: #404145;
+  --neutral: #222;
   --neutralContent: #575757;
   --base100: #fff;
 }

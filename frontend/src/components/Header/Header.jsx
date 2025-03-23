@@ -6,14 +6,14 @@ export default function Header() {
   const logo = data?.data[0];
 
   return (
-    <header className="py-2 2xl:py-1 border-b border-primary bg-secondary/5">
+    <header className="py-2 border-b border-primary bg-secondary/5">
       <div className="container">
         <div className="flex justify-between items-center">
           <Link to="/">
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/logo/${logo?.logo}`}
               alt="logo"
-              className="w-20 sm:w-24"
+              className="w-32 sm:w-36"
             />
           </Link>
 

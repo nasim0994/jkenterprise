@@ -12,9 +12,7 @@ export default function Banner() {
             <h2 className="text-3xl sm:text-5xl text-primary font-bold">
               {banner?.title}
             </h2>
-            <p className="sm:mt-4 text-lg sm:text-xl font-medium">
-              {banner?.description}
-            </p>
+            <p className="sm:mt-4 text-lg font-medium">{banner?.description}</p>
 
             <div className="mt-8">
               <a
